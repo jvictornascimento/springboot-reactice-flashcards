@@ -12,7 +12,7 @@ services:
       MAVEN_USER_HOME: /box
     volumes:
       - .:/reactive-flashcards
-      - box/box
+      - box:/box
     depends_on:
       - db
   db:
