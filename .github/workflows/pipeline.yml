@@ -32,12 +32,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-
 #    - name: Install Maven //For tests in local environment
 #      run: sudo apt-get update && sudo apt-get install -y maven
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-jar
+        path: target/*.jar
+
   docker:
     name: Run Docker Environment
     runs-on: ubuntu-latest
