@@ -3,9 +3,12 @@ package com.jvictornascimento.reactiveflashcards.api.controller;
 import com.jvictornascimento.reactiveflashcards.api.controller.request.UserRequest;
 import com.jvictornascimento.reactiveflashcards.api.controller.response.UserResponse;
 import com.jvictornascimento.reactiveflashcards.api.mapper.UserMapper;
+import com.jvictornascimento.reactiveflashcards.core.validation.MongoId;
 import com.jvictornascimento.reactiveflashcards.domain.service.UserService;
+import com.jvictornascimento.reactiveflashcards.domain.service.query.UserQueryService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @AllArgsConstructor
 public class UserController {
     private final UserService service;
+    private final UserQueryService userQueryService;
     private final UserMapper mapper;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
@@ -28,6 +32,12 @@ public class UserController {
     public Mono<UserResponse> save(@Valid @RequestBody final UserRequest request) {
         return service.save(mapper.toDocumento(request))
                 .doFirst(() -> log.info("==== Saving a user with follow data {}", request))
+                .map(mapper::toResponse);
+    }
+    @GetMapping(produces = APPLICATION_JSON_VALUE, value = "{id}")
+    public Mono<UserResponse> findById(@PathVariable @Valid @MongoId(message = "{userController.id}") final String id ) {
+        return userQueryService.findById(id)
+                .doFirst(() -> log.info("===== finding a user with follow id {}", id))
                 .map(mapper::toResponse);
     }
 }

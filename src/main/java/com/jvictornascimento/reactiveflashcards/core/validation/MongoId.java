@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = {MongoIdValidator.class})
 public @interface MongoId {
-    String menssage() default "{com.jvictornascimento.reactiveflashcards.MongoId.message}";
+    String message() default "{com.jvictornascimento.reactiveflashcards.MongoId.message}";
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
