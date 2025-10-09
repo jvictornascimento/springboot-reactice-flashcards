@@ -28,4 +28,9 @@ public class UserService {
                 .flatMap(userRespository::save)
                 .doFirst(()-> log.info("==== Try to update a user with follow info {}",document));
     }
+    public Mono<Void> delete(final String id) {
+        return userQueryService.findById(id)
+                .flatMap(userRespository::delete)
+                .doFirst(()-> log.info("==== Try to delete a user with follow if {}", id));
+    }
 }
