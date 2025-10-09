@@ -40,4 +40,13 @@ public class UserController {
                 .doFirst(() -> log.info("===== finding a user with follow id {}", id))
                 .map(mapper::toResponse);
     }
+    @PutMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, value = "{id}")
+    public Mono<UserResponse> update(@PathVariable @Valid @MongoId(message = "{userController.id}") final String id,
+                                     @Valid @RequestBody final UserRequest request) {
+            return service.update(mapper.toDocumento(request, id))
+                    .doFirst(()-> log.info("==== Updating a user with follow info [body: {}, id: {}", request, id))
+                    .map(mapper::toResponse);
+
+    }
+
 }

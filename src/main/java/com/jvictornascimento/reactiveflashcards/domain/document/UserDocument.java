@@ -19,6 +19,6 @@ public record UserDocument(@Id String id,
                            @LastModifiedDate
                            @Field("update_at")
                            OffsetDateTime updateAt) {
-    @Builder
+    @Builder(toBuilder = true)
     public UserDocument{}
 }

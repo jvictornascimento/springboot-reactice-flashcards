@@ -15,5 +15,8 @@ public interface UserMapper {
     @Mapping(target = "updateAt", ignore = true)
     UserDocument toDocumento(final UserRequest request);
 
+    @Mapping(target = "createAt", ignore = true)
+    @Mapping(target = "updateAt", ignore = true)
+    UserDocument toDocumento(final UserRequest request, final String id);
     UserResponse toResponse(final UserDocument document);
 }
