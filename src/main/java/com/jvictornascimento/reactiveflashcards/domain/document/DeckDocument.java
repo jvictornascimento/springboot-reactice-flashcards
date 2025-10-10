@@ -20,7 +20,7 @@ public record DeckDocument(@Id String id,
                            OffsetDateTime createAt,
                            @LastModifiedDate
                            @Field("update_at")
-                           OffsetDateTime updatedAt) {
+                           OffsetDateTime updateAt) {
     @Builder(toBuilder = true)
     public DeckDocument{}
 }
